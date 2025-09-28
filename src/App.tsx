@@ -5,7 +5,6 @@ import { ToggleSwitch } from './components/ToggleSwitch';
 import { OnboardingScreen } from './components/OnboardingScreen';
 import { Dashboard } from './components/Dashboard';
 import { ChatScreen } from './components/ChatScreen';
-import { DocumentsScreen } from './components/DocumentsScreen';
 import { ProfileScreen } from './components/ProfileScreen';
 import { SettingsScreen } from './components/SettingsScreen';
 
