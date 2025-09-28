@@ -24,6 +24,7 @@ function App() {
   const [appState, setAppState] = useState<AppState>('login');
   const [userData, setUserData] = useState<UserData | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [language, setLanguage] = useState('English');
 
   const handleLogin = async () => {
     if (phoneNumber.length === 10) {
@@ -93,7 +94,7 @@ function App() {
   };
 
   const isLoginDisabled = phoneNumber.length !== 10;
-
+  console.log(`App rendering: state is "${appState}", language is "${language}"`);
   // Render different screens based on app state
   if (appState === 'onboarding') {
     return <OnboardingScreen onComplete={handleOnboardingComplete} />;
@@ -108,6 +109,9 @@ function App() {
         onNavigateToSettings={handleNavigateToSettings}
         onLogout={handleLogout}
         darkMode={darkMode}
+        language={language}
+        onLanguageChange={setLanguage} // Add this line
+
       />
     );
   }
@@ -125,6 +129,7 @@ function App() {
         onBack={handleBackToDashboard}
         onUpdateProfile={handleUpdateProfile}
         darkMode={darkMode}
+        language={language} // Add this line
       />
     );
   }
@@ -137,6 +142,8 @@ function App() {
         onLogout={handleLogout}
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
+        language={language} // Add this line
+
       />
     );
   }

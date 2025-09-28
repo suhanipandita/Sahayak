@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, User, Bell, Shield, HelpCircle, LogOut, Smartphone, Globe, Moon } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation'; // Import the hook
 
 interface SettingsScreenProps {
   userName: string;
@@ -7,19 +8,39 @@ interface SettingsScreenProps {
   onLogout: () => void;
   darkMode: boolean;
   onToggleDarkMode: (enabled: boolean) => void;
+  language: string;
 }
 
-export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleDarkMode }: SettingsScreenProps) {
+export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleDarkMode, language }: SettingsScreenProps) {
   const [notifications, setNotifications] = useState(true);
-  const [language, setLanguage] = useState('English');
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const suser = useTranslation('Sahayak User', language);
+  const settingsTitle = useTranslation('Settings', language);
+  const accountTitle = useTranslation('Account', language);
+  const signOutText = useTranslation('Sign Out', language);
+  const preferencesTitle = useTranslation('Preferences', language);
+  const notificationsLabel = useTranslation('Notifications', language);
+  const notificationsDesc = useTranslation('Receive updates and alerts', language);
+  const darkModeLabel = useTranslation('Dark Mode', language);
+  const darkModeDesc = useTranslation('Switch to dark theme', language);
+  const securityTitle = useTranslation('Security & Privacy', language);
+  const privacyLabel = useTranslation('Privacy Settings', language);
+  const privacyDesc = useTranslation('Manage your data and privacy', language);
+  const twoFactorLabel = useTranslation('Two-Factor Authentication', language);
+  const twoFactorDesc = useTranslation('Add extra security to your account', language);
+  const supportTitle = useTranslation('Support', language);
+  const helpLabel = useTranslation('Help & Support', language);
+  const helpDesc = useTranslation('Get help with using Sahayak', language);
+  const logoutlabel = useTranslation('Sign Out', language);
+  const logoutdesc = useTranslation('Are you sure you want to sign out of your account?', language);
+  const cancelbutton = useTranslation('Cancel', language);
+
 
   const handleLogout = () => {
     setShowLogoutConfirm(false);
     onLogout();
   };
-
-  const languages = ['English', 'हिंदी', 'বাংলা', 'தமிழ்', 'తెలుగు', 'ગુજરાતી', 'ಕನ್ನಡ', 'മലയാളം'];
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -35,7 +56,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
             >
               <ArrowLeft className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
             </button>
-            <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Settings</h1>
+            <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{settingsTitle}</h1>
           </div>
         </div>
       </div>
@@ -45,7 +66,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
         {/* Account Section */}
         <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border mb-6`}>
           <div className={`p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Account</h2>
+            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{accountTitle}</h2>
           </div>
           <div className="p-6">
             <div className="flex items-center space-x-4 mb-4">
@@ -56,7 +77,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
               </div>
               <div>
                 <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{userName}</p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Sahayak User</p>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{suser}</p>
               </div>
             </div>
             <button
@@ -66,7 +87,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
               }`}
             >
               <LogOut className="w-5 h-5" />
-              <span className="font-medium">Sign Out</span>
+              <span className="font-medium">{signOutText}</span>
             </button>
           </div>
         </div>
@@ -74,7 +95,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
         {/* Preferences Section */}
         <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border mb-6`}>
           <div className={`p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Preferences</h2>
+            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{preferencesTitle}</h2>
           </div>
           <div className="p-6 space-y-4">
             {/* Notifications */}
@@ -82,8 +103,8 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
               <div className="flex items-center space-x-3">
                 <Bell className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
                 <div>
-                  <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Notifications</p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Receive updates and alerts</p>
+                  <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{notificationsLabel}</p>
+                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{notificationsDesc}</p>
                 </div>
               </div>
               <button
@@ -102,37 +123,13 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
               </button>
             </div>
 
-            {/* Language */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Globe className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
-                <div>
-                  <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Language</p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Choose your preferred language</p>
-                </div>
-              </div>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className={`px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  darkMode 
-                    ? 'bg-gray-700 border-gray-600 text-white' 
-                    : 'bg-white border-gray-300 text-gray-900'
-                }`}
-              >
-                {languages.map((lang) => (
-                  <option key={lang} value={lang}>{lang}</option>
-                ))}
-              </select>
-            </div>
-
             {/* Dark Mode */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <Moon className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
                 <div>
-                  <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Dark Mode</p>
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Switch to dark theme</p>
+                  <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{darkModeLabel}</p>
+                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{darkModeDesc}</p>
                 </div>
               </div>
               <button
@@ -156,7 +153,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
         {/* Security Section */}
         <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border mb-6`}>
           <div className={`p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Security & Privacy</h2>
+            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{securityTitle}</h2>
           </div>
           <div className="p-6 space-y-4">
             <button className={`flex items-center space-x-3 w-full px-4 py-3 text-left rounded-lg transition-colors ${
@@ -164,8 +161,8 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
             }`}>
               <Shield className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               <div>
-                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Privacy Settings</p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Manage your data and privacy</p>
+                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{privacyLabel}</p>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{privacyDesc}</p>
               </div>
             </button>
             <button className={`flex items-center space-x-3 w-full px-4 py-3 text-left rounded-lg transition-colors ${
@@ -173,8 +170,8 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
             }`}>
               <Smartphone className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               <div>
-                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Two-Factor Authentication</p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Add extra security to your account</p>
+                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{twoFactorLabel}</p>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{twoFactorDesc}</p>
               </div>
             </button>
           </div>
@@ -183,7 +180,7 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
         {/* Support Section */}
         <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border`}>
           <div className={`p-6 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Support</h2>
+            <h2 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{supportTitle}</h2>
           </div>
           <div className="p-6 space-y-4">
             <button className={`flex items-center space-x-3 w-full px-4 py-3 text-left rounded-lg transition-colors ${
@@ -191,8 +188,8 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
             }`}>
               <HelpCircle className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               <div>
-                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Help & Support</p>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Get help with using Sahayak</p>
+                <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{helpLabel}</p>
+                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{helpDesc}</p>
               </div>
             </button>
           </div>
@@ -203,8 +200,8 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
       {showLogoutConfirm && (
         <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
           <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-xl max-w-sm w-full p-6`}>
-            <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>Sign Out</h3>
-            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>Are you sure you want to sign out of your account?</p>
+            <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>{logoutlabel}</h3>
+            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>{logoutdesc}</p>
             <div className="flex space-x-3">
               <button
                 onClick={() => setShowLogoutConfirm(false)}
@@ -214,13 +211,13 @@ export function SettingsScreen({ userName, onBack, onLogout, darkMode, onToggleD
                     : 'text-gray-700 bg-gray-100 hover:bg-gray-200'
                 }`}
               >
-                Cancel
+                {cancelbutton}
               </button>
               <button
                 onClick={handleLogout}
                 className="flex-1 px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
               >
-                Sign Out
+                {signOutText}
               </button>
             </div>
           </div>

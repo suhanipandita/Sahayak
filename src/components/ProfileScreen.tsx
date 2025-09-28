@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, User, Phone, Briefcase, MapPin, Calendar, Edit3, Save, X } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation'; // Import the hook
 
 interface ProfileScreenProps {
   userName: string;
@@ -8,13 +9,26 @@ interface ProfileScreenProps {
   onBack: () => void;
   onUpdateProfile: (data: { name: string; occupation: string }) => void;
   darkMode: boolean;
+  language: string; 
 }
 
-export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onUpdateProfile, darkMode }: ProfileScreenProps) {
+export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onUpdateProfile, darkMode, language }: ProfileScreenProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(userName);
   const [editOccupation, setEditOccupation] = useState(userOccupation);
 
+  const profileTitle = useTranslation('Profile', language);
+  const personalInfoTitle = useTranslation('Personal Information', language);
+  const phoneLabel = useTranslation('Phone Number', language);
+  const occupationLabel = useTranslation('Occupation', language);
+  const memberSinceLabel = useTranslation('Member Since', language);
+  const textmem = useTranslation('January 2024',language)
+  const locationLabel = useTranslation('Location', language);
+  const locationtxt = useTranslation('India', language);
+  const servicesUsedLabel = useTranslation('Services Used', language);
+  const activeAppsLabel = useTranslation('Active Applications', language);
+  const chatSessionsLabel = useTranslation('Chat Sessions', language);
+    
   const handleSave = () => {
     onUpdateProfile({ name: editName, occupation: editOccupation });
     setIsEditing(false);
@@ -51,7 +65,7 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
               >
                 <ArrowLeft className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               </button>
-              <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Profile</h1>
+              <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{profileTitle}</h1>
             </div>
             {!isEditing ? (
               <button
@@ -146,7 +160,7 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
 
         {/* Profile Details */}
         <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border p-6`}>
-          <h3 className={`text-lg font-semibold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Personal Information</h3>
+          <h3 className={`text-lg font-semibold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{personalInfoTitle}</h3>
           
           <div className="space-y-6">
             <div className="flex items-center space-x-4">
@@ -154,7 +168,7 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
                 <Phone className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               </div>
               <div>
-                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Phone Number</p>
+                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{phoneLabel}</p>
                 <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>+91 {userPhone}</p>
               </div>
             </div>
@@ -164,7 +178,7 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
                 <Briefcase className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               </div>
               <div>
-                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Occupation</p>
+                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{occupationLabel}</p>
                 <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{userOccupation}</p>
               </div>
             </div>
@@ -174,8 +188,8 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
                 <Calendar className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               </div>
               <div>
-                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Member Since</p>
-                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>January 2024</p>
+                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{memberSinceLabel}</p>
+                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{textmem}</p>
               </div>
             </div>
 
@@ -184,8 +198,8 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
                 <MapPin className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
               </div>
               <div>
-                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Location</p>
-                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>India</p>
+                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>{locationLabel}</p>
+                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{locationtxt}</p>
               </div>
             </div>
           </div>
@@ -195,15 +209,15 @@ export function ProfileScreen({ userName, userPhone, userOccupation, onBack, onU
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border p-6 text-center`}>
             <div className="text-2xl font-bold text-green-600 mb-1">12</div>
-            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Services Used</div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{servicesUsedLabel}</div>
           </div>
           <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border p-6 text-center`}>
             <div className="text-2xl font-bold text-purple-600 mb-1">3</div>
-            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Active Applications</div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{activeAppsLabel}</div>
           </div>
           <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-xl shadow-sm border p-6 text-center`}>
             <div className="text-2xl font-bold text-orange-600 mb-1">8</div>
-            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Chat Sessions</div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{chatSessionsLabel}</div>
           </div>
         </div>
       </div>
