@@ -1,18 +1,19 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
-// STEP 1: Import the TextToSpeech component
 import { TextToSpeech } from './TextToSpeech';
 
+// 1. Ensure the prop is defined in the interface
 interface PhoneInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
   darkMode: boolean;
+  isVoiceMode: boolean; 
 }
 
-export function PhoneInput({ value, onChange, placeholder, darkMode }: PhoneInputProps) {
+// 2. Ensure the prop is destructured from the component's arguments
+export function PhoneInput({ value, onChange, placeholder, darkMode, isVoiceMode }: PhoneInputProps) {
   return (
-    // STEP 2: Wrap everything in a div with relative positioning
     <div className="relative">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <Phone className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
@@ -26,11 +27,11 @@ export function PhoneInput({ value, onChange, placeholder, darkMode }: PhoneInpu
           darkMode
             ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
             : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-        }`} // STEP 3: Add right padding (pr-10)
+        }`}
       />
-      {/* STEP 4: Add the icon with absolute positioning */}
       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-        <TextToSpeech text={placeholder} />
+        {/* 3. Ensure the prop is passed to the TextToSpeech component */}
+        <TextToSpeech text={placeholder} isVoiceMode={isVoiceMode} />
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ interface UserData {
   name: string;
   occupation: string;
   isVoiceMode: boolean;
+
 }
 
 function App() {
@@ -164,7 +165,7 @@ function App() {
                 <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mr-2`}>
                   Sahayak
                 </h2>
-                <TextToSpeech text="Welcome to Sahayak" />
+                <TextToSpeech text="Welcome to Sahayak" isVoiceMode={isVoiceMode} />
               </div>
               {/* === MODIFICATION END === */}
             </div>
@@ -176,6 +177,8 @@ function App() {
                 onChange={setPhoneNumber}
                 placeholder="Enter your 10-digit number"
                 darkMode={darkMode}
+                isVoiceMode={isVoiceMode}
+
               />
             </div>
 
@@ -204,7 +207,7 @@ function App() {
           {/* === MODIFICATION START === */}
           <div className="flex justify-center items-center">
             <p className="mr-2">Secure government communication platform</p>
-            <TextToSpeech text="Secure government communication platform" />
+            <TextToSpeech text="Secure government communication platform" isVoiceMode={isVoiceMode} />
           </div>
           {/* === MODIFICATION END === */}
         </div>
