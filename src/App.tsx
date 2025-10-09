@@ -159,13 +159,12 @@ function App() {
                 <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2 mr-2`}>
                   Welcome to
                 </h1>
-                <TextToSpeech text="Welcome to" />
               </div>
               <div className="flex justify-center items-center">
                 <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mr-2`}>
                   Sahayak
                 </h2>
-                <TextToSpeech text="Sahayak" />
+                <TextToSpeech text="Welcome to Sahayak" />
               </div>
               {/* === MODIFICATION END === */}
             </div>
