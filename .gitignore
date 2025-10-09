@@ -1,4 +1,8 @@
 node_modules
 dist
+<<<<<<< HEAD
 .env
 Sahayak_backend/*.json
+=======
+.env
+>>>>>>> parent of 7c0133c (text-to-speech added)
