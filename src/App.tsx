@@ -7,6 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { ChatScreen } from './components/ChatScreen';
 import { ProfileScreen } from './components/ProfileScreen';
 import { SettingsScreen } from './components/SettingsScreen';
+import { TextToSpeech } from './components/TextToSpeech';
 
 type AppState = 'login' | 'onboarding' | 'dashboard' | 'chat' | 'profile' | 'settings';
 
@@ -29,12 +30,8 @@ function App() {
   const handleLogin = async () => {
     if (phoneNumber.length === 10) {
       setIsLoading(true);
-      
-      // Simulate login process
       await new Promise(resolve => setTimeout(resolve, 2000));
       setIsLoading(false);
-      
-      // Store initial user data and move to onboarding
       setUserData({
         phoneNumber,
         name: '',
@@ -103,7 +100,7 @@ function App() {
   if (appState === 'dashboard' && userData) {
     return (
       <Dashboard
-        userName={userData.name} 
+        userName={userData.name}
         onStartChat={handleStartChat}
         onNavigateToProfile={handleNavigateToProfile}
         onNavigateToSettings={handleNavigateToSettings}
@@ -117,7 +114,7 @@ function App() {
   }
 
   if (appState === 'chat' && userData) {
-    return <ChatScreen userName={userData.name} onBack={handleBackToDashboard} />;
+    return <ChatScreen userName={userData.name} onBack={handleBackToDashboard} language={language} />;
   }
 
   if (appState === 'profile' && userData) {
@@ -129,16 +126,16 @@ function App() {
         onBack={handleBackToDashboard}
         onUpdateProfile={handleUpdateProfile}
         darkMode={darkMode}
-        language={language} // Add this line
+        language={language}
       />
     );
   }
 
   if (appState === 'settings' && userData) {
     return (
-      <SettingsScreen 
-        userName={userData.name} 
-        onBack={handleBackToDashboard} 
+      <SettingsScreen
+        userName={userData.name}
+        onBack={handleBackToDashboard}
         onLogout={handleLogout}
         darkMode={darkMode}
         onToggleDarkMode={handleToggleDarkMode}
@@ -157,12 +154,20 @@ function App() {
           <div className="px-8 py-12">
             {/* Header */}
             <div className="text-center mb-12">
-              <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-                Welcome to
-              </h1>
-              <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Sahayak
-              </h2>
+              {/* === MODIFICATION START === */}
+              <div className="flex justify-center items-center">
+                <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2 mr-2`}>
+                  Welcome to
+                </h1>
+                <TextToSpeech text="Welcome to" />
+              </div>
+              <div className="flex justify-center items-center">
+                <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mr-2`}>
+                  Sahayak
+                </h2>
+                <TextToSpeech text="Sahayak" />
+              </div>
+              {/* === MODIFICATION END === */}
             </div>
 
             {/* Phone Input */}
@@ -197,7 +202,12 @@ function App() {
 
         {/* Footer */}
         <div className={`text-center mt-6 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-          <p>Secure government communication platform</p>
+          {/* === MODIFICATION START === */}
+          <div className="flex justify-center items-center">
+            <p className="mr-2">Secure government communication platform</p>
+            <TextToSpeech text="Secure government communication platform" />
+          </div>
+          {/* === MODIFICATION END === */}
         </div>
       </div>
     </div>

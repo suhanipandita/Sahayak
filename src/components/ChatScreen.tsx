@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowLeft, User, Mic, MicOff, Volume2 } from 'lucide-react';
-import { useSpeechRecognitionHook } from '../hooks/useSpeechRecognition';
 import { useTranslation } from '../hooks/useTranslation'; // Import the hook
 
 interface ChatScreenProps {
@@ -15,28 +14,6 @@ export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
   const eligible_txt = useTranslation('Check eligibilty', language);
   const apply_txt = useTranslation('Apply for scheme', language);
   const contact_txt = useTranslation('Contact Support', language);
-
-  const {
-    transcript,
-    isListening,
-    startListening,
-    stopListening,
-    resetTranscript,
-    browserSupportsSpeechRecognition
-  } = useSpeechRecognitionHook();
-
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
-  }
-
-  const handleToggleListening = () => {
-    if (isListening) {
-      stopListening();
-    } else {
-      resetTranscript();
-      startListening();
-    }
-  };
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
@@ -72,13 +49,6 @@ export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
           />
         </div>
       </div>
-
-      {/* Transcription Display */}
-      {isListening && (
-        <div className="bg-gray-100 p-4 text-center">
-          <p className="text-gray-600">{transcript || "Listening..."}</p>
-        </div>
-      )}
 
       {/* Quick Actions Footer */}
       <div className="bg-white border-t border-gray-200 p-4 flex-shrink-0">
