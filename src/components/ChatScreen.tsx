@@ -1,9 +1,5 @@
 import React from 'react';
 import { ArrowLeft, User, Mic, MicOff, Volume2 } from 'lucide-react';
-<<<<<<< HEAD
-=======
-import { useSpeechRecognitionHook } from '../hooks/useSpeechRecognition';
->>>>>>> 793000ecec58c2876959780f5d713c62fca4bc45
 import { useTranslation } from '../hooks/useTranslation'; // Import the hook
 
 interface ChatScreenProps {
@@ -18,32 +14,6 @@ export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
   const eligible_txt = useTranslation('Check eligibilty', language);
   const apply_txt = useTranslation('Apply for scheme', language);
   const contact_txt = useTranslation('Contact Support', language);
-
-<<<<<<< HEAD
-=======
-  const {
-    transcript,
-    isListening,
-    startListening,
-    stopListening,
-    resetTranscript,
-    browserSupportsSpeechRecognition
-  } = useSpeechRecognitionHook();
-
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
-  }
-
-  const handleToggleListening = () => {
-    if (isListening) {
-      stopListening();
-    } else {
-      resetTranscript();
-      startListening();
-    }
-  };
-
->>>>>>> 793000ecec58c2876959780f5d713c62fca4bc45
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header */}
