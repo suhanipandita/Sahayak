@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowLeft, User, Mic, MicOff, Volume2 } from 'lucide-react';
 import { useSpeechRecognitionHook } from '../hooks/useSpeechRecognition';
-import { speak } from '../services/textToSpeechService';
 import { useTranslation } from '../hooks/useTranslation'; // Import the hook
 
 interface ChatScreenProps {
@@ -12,10 +11,10 @@ interface ChatScreenProps {
 
 export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
 
-    const mainchat = useTranslation('Main Chat', language);
-    const eligible_txt = useTranslation('Check eligibilty', language);
-    const apply_txt = useTranslation('Apply for scheme', language);
-    const contact_txt = useTranslation('Contact Support', language);
+  const mainchat = useTranslation('Main Chat', language);
+  const eligible_txt = useTranslation('Check eligibilty', language);
+  const apply_txt = useTranslation('Apply for scheme', language);
+  const contact_txt = useTranslation('Contact Support', language);
 
   const {
     transcript,
@@ -37,10 +36,6 @@ export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
       resetTranscript();
       startListening();
     }
-  };
-
-  const handleSpeak = (text: string) => {
-    speak(text);
   };
 
   return (
@@ -89,21 +84,14 @@ export function ChatScreen({ userName, onBack, language }: ChatScreenProps) {
       <div className="bg-white border-t border-gray-200 p-4 flex-shrink-0">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-wrap gap-3 justify-center">
-            <button onClick={() => handleSpeak("Check eligibility")} className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
-              {eligible_txt} <Volume2 className="inline-block w-4 h-4 ml-2" />
+            <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
+              {eligible_txt}
             </button>
-            <button onClick={() => handleSpeak("Apply for scheme")} className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
-              {apply_txt} <Volume2 className="inline-block w-4 h-4 ml-2" />
+            <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
+              {apply_txt}
             </button>
-            <button onClick={() => handleSpeak("Contact support")} className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
-              {contact_txt} <Volume2 className="inline-block w-4 h-4 ml-2" />
-            </button>
-            <button
-              onClick={handleToggleListening}
-              className={`p-2 rounded-full transition-colors ${isListening ? 'bg-red-500 text-white' : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
-            >
-              {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium text-gray-700 transition-colors">
+              {contact_txt}
             </button>
           </div>
         </div>
