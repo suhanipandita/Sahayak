@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, Settings, User, ChevronDown, LogOut, CheckCircle } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
+import { TextToSpeech } from './TextToSpeech';
 
 interface DashboardProps {
   userName: string;
@@ -11,13 +12,15 @@ interface DashboardProps {
   darkMode: boolean;
   language: string;
   onLanguageChange: (language: string) => void; // Add this
+  isVoiceMode: boolean; // 1. Add this prop
+
 }
 
-export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNavigateToSettings, onLogout, darkMode, language, onLanguageChange }: DashboardProps) {
+export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNavigateToSettings, onLogout, darkMode, language, onLanguageChange, isVoiceMode }: DashboardProps) {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showPopup, setShowPopup] = useState(false); // State for the popup
   const languages = ['English', 'हिंदी', 'বাংলা', 'தமிழ்', 'తెలుగు', 'ગુજરાતી', 'ಕನ್ನಡ', 'മലയാളം'];
-  
+
   const appname = useTranslation('Sahayak', language);
   const welcomeText = useTranslation('Welcome', language);
   const assistantText = useTranslation('Your AI-powered government services assistant', language);
@@ -27,15 +30,15 @@ export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNaviga
   const appstatus = useTranslation('Check application status', language);
   const applysch = useTranslation('Apply for scheme', language);
   const nearoff = useTranslation('Find nearest office', language);
-  const poptop = useTranslation('Popular Topics',language)
-  const aadhservice = useTranslation('Aadhaar services',language)
-  const pan = useTranslation('PAN card issues',language)
-  const pass = useTranslation('Passport services',language)
-  const act = useTranslation('Recent Activity',language)
-  const acttxt = useTranslation('No Recent Activity',language)
-  const help = useTranslation('Need Help Getting Started?',language)
-  const start = useTranslation('Click the Start Conversation button above to begin chatting with our AI assistant.',language)
-  const snow = useTranslation('Start Now',language)
+  const poptop = useTranslation('Popular Topics', language)
+  const aadhservice = useTranslation('Aadhaar services', language)
+  const pan = useTranslation('PAN card issues', language)
+  const pass = useTranslation('Passport services', language)
+  const act = useTranslation('Recent Activity', language)
+  const acttxt = useTranslation('No Recent Activity', language)
+  const help = useTranslation('Need Help Getting Started?', language)
+  const start = useTranslation('Click the Start Conversation button above to begin chatting with our AI assistant.', language)
+  const snow = useTranslation('Start Now', language)
 
   // This handler now updates the language and shows the popup
   const handleLanguageChange = (newLanguage: string) => {
@@ -53,15 +56,16 @@ export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNaviga
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{appname}</h1>
-              
-              {/* START: Add this section */}
+            <TextToSpeech text={appname} isVoiceMode={isVoiceMode} />
+
+            {/* START: Add this section */}
             <div className="flex items-center space-x-4">
               <select
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
                 className={`px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${darkMode
-                    ? 'bg-gray-700 border-gray-600 text-white'
-                    : 'bg-white border-gray-300 text-gray-900'
+                  ? 'bg-gray-700 border-gray-600 text-white'
+                  : 'bg-white border-gray-300 text-gray-900'
                   }`}
               >
                 {languages.map((lang) => (
@@ -134,16 +138,19 @@ export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNaviga
             <h2 className={`text-3xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               {welcomeText}, {userName}!
             </h2>
+            <TextToSpeech text={`${welcomeText},${userName}`} isVoiceMode={isVoiceMode} />
+            <div>
             <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-8`}>
               {assistantText}
-            </p>
+            </p><TextToSpeech text={assistantText} isVoiceMode={isVoiceMode} />
+            </div>
 
             {/* Primary Chat Button */}
             <div
               onClick={onStartChat}
               className={`inline-flex items-center space-x-4 px-8 py-6 rounded-2xl cursor-pointer transition-all duration-200 transform hover:scale-105 ${darkMode
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
-                  : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg hover:shadow-xl'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
+                : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg hover:shadow-xl'
                 }`}
             >
               <MessageCircle className="w-8 h-8" />
@@ -213,8 +220,8 @@ export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNaviga
             <button
               onClick={onStartChat}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${darkMode
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
             >
               {snow}
@@ -231,9 +238,9 @@ export function Dashboard({ userName, onStartChat, onNavigateToProfile, onNaviga
         )}
       </div>
     </div>
-      );
-      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-lg">
-          <CheckCircle className="w-5 h-5 text-green-400" />
-          <span>Language changed to {language}</span>
-        </div>
+  );
+  <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-lg">
+    <CheckCircle className="w-5 h-5 text-green-400" />
+    <span>Language changed to {language}</span>
+  </div>
 }

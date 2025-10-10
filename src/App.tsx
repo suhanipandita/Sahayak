@@ -95,7 +95,7 @@ function App() {
   console.log(`App rendering: state is "${appState}", language is "${language}"`);
   // Render different screens based on app state
   if (appState === 'onboarding') {
-    return <OnboardingScreen onComplete={handleOnboardingComplete} />;
+    return <OnboardingScreen onComplete={handleOnboardingComplete} isVoiceMode={isVoiceMode}/>;
   }
 
   if (appState === 'dashboard' && userData) {
@@ -109,7 +109,7 @@ function App() {
         darkMode={darkMode}
         language={language}
         onLanguageChange={setLanguage} // Add this line
-
+        
       />
     );
   }

@@ -1,50 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { User } from 'lucide-react';
+import { TextToSpeech } from './TextToSpeech';
 
 interface NameInputProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
+  isVoiceMode: boolean;
 }
 
-export function NameInput({ value, onChange, onSubmit }: NameInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && value.trim()) {
-      onSubmit();
-    }
-  };
-
+export function NameInput({ value, onChange, onSubmit, isVoiceMode }: NameInputProps) {
+  const placeholder = "Enter your full name...";
   return (
-    <div className="space-y-4">
-      <div className="relative">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          onKeyPress={handleKeyPress}
-          placeholder="What is your full name?"
-          className={`w-full px-4 py-4 text-base bg-white border-2 rounded-2xl transition-all duration-200 placeholder-gray-400 focus:outline-none ${
-            isFocused 
-              ? 'border-gray-900 shadow-sm' 
-              : 'border-gray-300 hover:border-gray-400'
-          }`}
-        />
+    <div className="relative">
+      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <User className="w-5 h-5 text-gray-400" />
       </div>
-      
-      <button
-        onClick={onSubmit}
-        disabled={!value.trim()}
-        className={`w-full py-3 px-6 text-base font-semibold text-white rounded-xl transition-all duration-200 ${
-          !value.trim()
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-gray-900 hover:bg-gray-800 active:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5'
-        }`}
-      >
-        Next
-      </button>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
+        placeholder={placeholder}
+        className="w-full pl-10 pr-16 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+        <TextToSpeech text={placeholder} isVoiceMode={isVoiceMode} />
+        <button
+          onClick={onSubmit}
+          className="ml-2 px-3 py-1 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:bg-gray-300"
+          disabled={!value.trim()}
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 }
