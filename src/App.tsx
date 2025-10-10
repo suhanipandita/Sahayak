@@ -109,7 +109,7 @@ function App() {
         darkMode={darkMode}
         language={language}
         onLanguageChange={setLanguage} // Add this line
-        
+        isVoiceMode={isVoiceMode}
       />
     );
   }
