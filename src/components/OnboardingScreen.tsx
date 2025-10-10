@@ -3,12 +3,14 @@ import { ProgressBar } from './ProgressBar';
 import { ChatBubble } from './ChatBubble';
 import { NameInput } from './NameInput';
 import { OccupationInput } from './OccupationInput';
+import { TextToSpeech } from './TextToSpeech';
 
 interface OnboardingScreenProps {
   onComplete: (userData: { name: string; occupation: string }) => void;
+  isVoiceMode: boolean; // 1. Add this prop
 }
 
-export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
+export function OnboardingScreen({ onComplete, isVoiceMode }: OnboardingScreenProps) { // 2. Receive the prop
   const [name, setName] = useState('');
   const [occupation, setOccupation] = useState('');
   const [showNameInput, setShowNameInput] = useState(true);
@@ -18,10 +20,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const handleNameSubmit = () => {
     if (name.trim()) {
       setShowNameInput(false);
-      // Show occupation input after name is submitted
-      setTimeout(() => {
-        setShowOccupationInput(true);
-      }, 1000);
+      setTimeout(() => setShowOccupationInput(true), 1000);
     }
   };
 
@@ -29,7 +28,6 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
     if (occupation.trim()) {
       setShowOccupationInput(false);
       setIsProcessing(true);
-      // Simulate processing before completing onboarding
       setTimeout(() => {
         onComplete({ name: name.trim(), occupation: occupation.trim() });
       }, 1500);
@@ -42,55 +40,54 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
     return 10;
   };
 
+  const welcomeMessage = "Welcome! Let's get to know you so we can help you better.";
+  const occupationMessage = "Great! Now, what is your occupation? This helps us provide more relevant services.";
+  const footerMessage = "Secure government communication platform";
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm mx-auto">
         <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
           <div className="px-8 py-12">
-            {/* Progress Bar */}
             <ProgressBar currentStep={getCurrentStep()} totalSteps={10} />
 
-            {/* Chat Interface */}
             <div className="space-y-4 mb-8">
-              <ChatBubble 
-                message="Welcome! Let's get to know you so we can help you better."
-                isBot={true}
-              />
-              
+              {/* 3. Add TextToSpeech to chat bubbles */}
+              <div className="flex items-start space-x-2">
+                <ChatBubble message={welcomeMessage} isBot={true} />
+                <TextToSpeech text={welcomeMessage} isVoiceMode={isVoiceMode} />
+              </div>
+
               {!showNameInput && name && (
-                <ChatBubble 
-                  message={`Nice to meet you, ${name}!`}
-                  isBot={false}
-                />
+                <ChatBubble message={`Nice to meet you, ${name}!`} isBot={false} />
               )}
-              
+
               {showOccupationInput && (
-                <ChatBubble 
-                  message="Great! Now, what is your occupation? This helps us provide more relevant services."
-                  isBot={true}
-                />
+                <div className="flex items-start space-x-2">
+                  <ChatBubble message={occupationMessage} isBot={true} />
+                  <TextToSpeech text={occupationMessage} isVoiceMode={isVoiceMode} />
+                </div>
               )}
-              
+
               {!showOccupationInput && !showNameInput && occupation && !isProcessing && (
-                <ChatBubble 
-                  message={occupation}
-                  isBot={false}
-                />
+                <ChatBubble message={occupation} isBot={false} />
               )}
             </div>
 
-            {/* Input Fields */}
+            {/* 4. Pass isVoiceMode to input components */}
             {showNameInput ? (
               <NameInput
                 value={name}
                 onChange={setName}
                 onSubmit={handleNameSubmit}
+                isVoiceMode={isVoiceMode}
               />
             ) : showOccupationInput ? (
               <OccupationInput
                 value={occupation}
                 onChange={setOccupation}
                 onSubmit={handleOccupationSubmit}
+                isVoiceMode={isVoiceMode}
               />
             ) : (
               <div className="text-center">
@@ -101,9 +98,12 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="text-center mt-6 text-xs text-gray-500">
-          <p>Secure government communication platform</p>
+           {/* 5. Fix footer */}
+          <div className="flex justify-center items-center">
+             <p className="mr-2">{footerMessage}</p>
+             <TextToSpeech text={footerMessage} isVoiceMode={isVoiceMode} />
+          </div>
         </div>
       </div>
     </div>

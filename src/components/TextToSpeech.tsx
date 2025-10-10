@@ -4,10 +4,16 @@ import { useTextToSpeech } from '../hooks/useTextToSpeech';
 
 interface TextToSpeechProps {
   text: string;
+  isVoiceMode: boolean; // Add this new prop
 }
 
-export function TextToSpeech({ text }: TextToSpeechProps) {
+export function TextToSpeech({ text, isVoiceMode }: TextToSpeechProps) {
   const { isPlaying, play } = useTextToSpeech();
+
+  // If voice mode is disabled, render nothing.
+  if (!isVoiceMode) {
+    return null;
+  }
 
   return (
     <button onClick={() => play(text)} disabled={isPlaying}>

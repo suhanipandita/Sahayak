@@ -16,6 +16,7 @@ interface UserData {
   name: string;
   occupation: string;
   isVoiceMode: boolean;
+
 }
 
 function App() {
@@ -94,7 +95,7 @@ function App() {
   console.log(`App rendering: state is "${appState}", language is "${language}"`);
   // Render different screens based on app state
   if (appState === 'onboarding') {
-    return <OnboardingScreen onComplete={handleOnboardingComplete} />;
+    return <OnboardingScreen onComplete={handleOnboardingComplete} isVoiceMode={isVoiceMode}/>;
   }
 
   if (appState === 'dashboard' && userData) {
@@ -108,7 +109,7 @@ function App() {
         darkMode={darkMode}
         language={language}
         onLanguageChange={setLanguage} // Add this line
-
+        isVoiceMode={isVoiceMode}
       />
     );
   }
@@ -159,13 +160,12 @@ function App() {
                 <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2 mr-2`}>
                   Welcome to
                 </h1>
-                <TextToSpeech text="Welcome to" />
               </div>
               <div className="flex justify-center items-center">
                 <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mr-2`}>
                   Sahayak
                 </h2>
-                <TextToSpeech text="Sahayak" />
+                <TextToSpeech text="Welcome to Sahayak" isVoiceMode={isVoiceMode} />
               </div>
               {/* === MODIFICATION END === */}
             </div>
@@ -177,6 +177,8 @@ function App() {
                 onChange={setPhoneNumber}
                 placeholder="Enter your 10-digit number"
                 darkMode={darkMode}
+                isVoiceMode={isVoiceMode}
+
               />
             </div>
 
@@ -205,7 +207,7 @@ function App() {
           {/* === MODIFICATION START === */}
           <div className="flex justify-center items-center">
             <p className="mr-2">Secure government communication platform</p>
-            <TextToSpeech text="Secure government communication platform" />
+            <TextToSpeech text="Secure government communication platform" isVoiceMode={isVoiceMode} />
           </div>
           {/* === MODIFICATION END === */}
         </div>

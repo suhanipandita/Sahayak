@@ -15,7 +15,7 @@ export function ToggleSwitch({ isVoiceMode, onToggle, darkMode = false }: Toggle
             ? darkMode ? 'text-white' : 'text-gray-900'
             : darkMode ? 'text-gray-400' : 'text-gray-500'
         }`}>
-          Voice Input
+          Text Input
         </span>
         
         <button
@@ -40,7 +40,7 @@ export function ToggleSwitch({ isVoiceMode, onToggle, darkMode = false }: Toggle
             ? darkMode ? 'text-white' : 'text-gray-900'
             : darkMode ? 'text-gray-400' : 'text-gray-500'
         }`}>
-          Text Input
+          Voice Input
         </span>
       </div>
     </div>

@@ -1,57 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Phone } from 'lucide-react';
+import { TextToSpeech } from './TextToSpeech';
 
+// 1. Ensure the prop is defined in the interface
 interface PhoneInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
-  darkMode?: boolean;
+  darkMode: boolean;
+  isVoiceMode: boolean; 
 }
 
-export function PhoneInput({ value, onChange, placeholder, darkMode = false }: PhoneInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    // Allow only digits and limit to 10 characters
-    const digitsOnly = input.replace(/\D/g, '').slice(0, 10);
-    onChange(digitsOnly);
-  };
-
+// 2. Ensure the prop is destructured from the component's arguments
+export function PhoneInput({ value, onChange, placeholder, darkMode, isVoiceMode }: PhoneInputProps) {
   return (
-    <div className="space-y-2">
-      <label className={`block text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>
-        Phone Number
-      </label>
-      <div className="relative">
-        <input
-          type="tel"
-          value={value}
-          onChange={handleChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          placeholder={placeholder}
-          className={`w-full px-4 py-3 text-base border rounded-xl transition-all duration-200 focus:outline-none ${
-            darkMode 
-              ? `bg-gray-700 border-gray-600 text-white placeholder-gray-400 ${
-                  isFocused ? 'border-gray-400 bg-gray-600' : 'hover:border-gray-500'
-                }`
-              : `bg-gray-50 border-gray-200 placeholder-gray-400 ${
-                  isFocused ? 'border-gray-900 bg-white shadow-sm' : 'hover:border-gray-300'
-                }`
-          }`}
-          maxLength={10}
-        />
-        {value.length > 0 && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <span className={`text-xs font-medium ${
-              value.length === 10 
-                ? 'text-green-600' 
-                : darkMode ? 'text-gray-500' : 'text-gray-400'
-            }`}>
-              {value.length}/10
-            </span>
-          </div>
-        )}
+    <div className="relative">
+      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <Phone className={`w-5 h-5 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+      </div>
+      <input
+        type="tel"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className={`w-full pl-10 pr-10 py-3 border rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+          darkMode
+            ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+        }`}
+      />
+      <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+        {/* 3. Ensure the prop is passed to the TextToSpeech component */}
+        <TextToSpeech text={placeholder} isVoiceMode={isVoiceMode} />
       </div>
     </div>
   );
