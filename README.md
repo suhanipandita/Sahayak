@@ -2,7 +2,7 @@
 
 **Sahayak** is a secure government communication platform designed to bridge the gap between citizens and government schemes. It is a full-stack web application featuring a voice-enabled interface, multi-language support, and an AI-powered chatbot to assist users in checking eligibility and applying for schemes.
 
-## 🚀 Key Features
+## Key Features
 
 * **Voice-First Interface:** Built-in Text-to-Speech (TTS) capabilities to make the platform accessible to a wider audience, including those with low literacy.
 * **Multi-Language Support:** Real-time translation of the user interface into local languages (e.g., Hindi) using Google Cloud Translation API.
@@ -11,7 +11,7 @@
 * **User Dashboard:** Centralized hub for managing user profiles, settings, and accessing support.
 * **Dark Mode:** Built-in accessibility feature for better visibility in low-light environments.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 * **Framework:** React (v18) with TypeScript
@@ -29,7 +29,7 @@
     * Google Cloud Text-to-Speech
     * Botpress (Chatbot integration)
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 Sahayak/
