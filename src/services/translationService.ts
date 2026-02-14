@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/translate';
+const API_URL = '/api/translate';
 
 // This function takes a string of text and a target language code (e.g., 'hi' for Hindi)
 // and asks our backend to translate it.

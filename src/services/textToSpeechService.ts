@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/text-to-speech';
+const API_URL = '/api/text-to-speech';
 
 export const convertTextToSpeech = async (text: string) => {
   try {
